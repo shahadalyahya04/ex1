@@ -27,7 +27,7 @@ jobs:
           EOF
 
       - name: Upload greeting artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: greeting
           path: greeting.txt
