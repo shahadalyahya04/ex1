@@ -1,0 +1,33 @@
+name: Exercise 1 - Hello Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Enter your name'
+        required: true
+        type: string
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print context info
+        run: |
+          echo "Hello, ${{ inputs.name }}!"
+          echo "Actor: ${{ github.actor }}"
+          echo "Branch: ${{ github.ref_name }}"
+
+      - name: Create greeting file
+        run: |
+          cat <<EOF > greeting.txt
+          Hello, ${{ inputs.name }}!
+          Actor: ${{ github.actor }}
+          Branch: ${{ github.ref_name }}
+          EOF
+
+      - name: Upload greeting artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: greeting
+          path: greeting.txt
